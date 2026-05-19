@@ -1,0 +1,28 @@
+name: Run Java OOP Assignment
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run-assignment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Compile Java source files
+        run: javac -d target/classes src/main/java/com/mycompany/assignment/*.java
+
+      - name: Run application smoke test
+        run: |
+          printf "3\n" | java -cp target/classes com.mycompany.assignment.Assignment
